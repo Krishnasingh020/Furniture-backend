@@ -6,7 +6,20 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
-app.use(cors()); // Allow all origins for initial testing
+//app.use(cors()); // Allow all origins for initial testing
+
+
+// CORS configuration for production
+const allowedOrigins = [
+  "https://ayatrio.com",
+  "https://www.ayatrio.com"
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
+
 
 const PORT = process.env.PORT || 5000;
 const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;

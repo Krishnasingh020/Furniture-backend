@@ -4,7 +4,20 @@ const Category = require('../models/Category');
 const Subcategory = require('../models/Subcategory');
 require('dotenv').config();
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/kalium_furniture';
+const MONGODB_URI = process.env.MONGO_URI;
+
+if (!MONGODB_URI) {
+  console.error('❌ ERROR: MONGO_URI is missing in .env file!');
+  console.error('   Please create a .env file with your Atlas connection string.');
+  process.exit(1);
+}
+
+if (MONGODB_URI.includes('localhost') || MONGODB_URI.includes('127.0.0.1')) {
+  console.warn('⚠️  WARNING: You are connecting to LOCALHOST. Is this intended?');
+  console.warn('   If you want to seed Atlas, update MONGO_URI in .env');
+}
+
+console.log('🔗 Connecting to database:', MONGODB_URI.replace(/:([^:@]+)@/, ':****@')); // Hide password
 
 const sampleProducts = [
   // MIRRORS
